@@ -1,7 +1,8 @@
- import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { URL } from "../Utils/utils";
 import { useParams } from "react-router-dom";
+import swal from "sweetalert";
 import "./style.css";
 
 const ColoredLine = ({ color }) => (
@@ -165,6 +166,11 @@ function Home() {
       `${URL}api/res/${res_id}/table/${table_id}/order`,
       payload
     );
+    if (response.data.Restaurant_id) {
+      swal("Order placed successfully.").then((value) => {
+        window.location.reload();
+      });
+    }
     setMsg(response.Message);
     window.location.reload();
   };
@@ -194,9 +200,11 @@ function Home() {
           </div>
           <ColoredLine color="red" />
           <div className="row">
-            
             {menu.map((item) => (
-              <div className="col-md-12 product-ln" style={{border: "1px solid #ccc"}}>
+              <div
+                className="col-md-12 product-ln"
+                style={{ border: "1px solid #ccc" }}
+              >
                 <div className="row">
                   <div className="col-md-3">
                     <label class="form-check-label pt-2" for="flexCheckDefault">
@@ -228,7 +236,6 @@ function Home() {
             ))}
           </div>
           <div className="row">
-          
             <div className="col-md-12 text-right p-0 mt-4">
               {item.length > 0 && (
                 <div class="card">
@@ -258,7 +265,9 @@ function Home() {
                               >
                                 -
                               </button>
-                              <span className="fprice">= {it.total_price} Tk</span>
+                              <span className="fprice">
+                                = {it.total_price} Tk
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -291,22 +300,21 @@ function Home() {
               {item.length > 0 && (
                 <>
                   <div className="row">
-                  <div className="col-md-6 mx-auto">
-                    <button
-                      className="btn btn-block mt-2 text-center text-white"
-                      style={{ background: "orange" }}
-                      onClick={makeOrder}
-                    >
-                      Order now
-                    </button>
-                    <p>{msg}</p>
-                  </div>
+                    <div className="col-md-6 mx-auto">
+                      <button
+                        className="btn btn-block mt-2 text-center text-white"
+                        style={{ background: "orange" }}
+                        onClick={makeOrder}
+                      >
+                        Order now
+                      </button>
+                      <p>{msg}</p>
+                    </div>
                   </div>
                 </>
               )}
             </div>
           </div>
-          
         </>
       ) : (
         <>
