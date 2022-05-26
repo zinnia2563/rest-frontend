@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { URL } from "../Utils/utils";
 import { useParams } from "react-router-dom";
+import "./style.css";
 
 const ColoredLine = ({ color }) => (
   <hr
@@ -177,9 +178,8 @@ function Home() {
               <p style={{ color: "red" }}>{resName}</p>
               <p style={{ color: "red" }}>{restaurentDetails.Address}</p>
             </div>
-            <div className="col-md-8">
+            <div className="col-md-8 text-center">
               <h1>
-                Welcome to{" "}
                 <sub>
                   <span style={{ color: "red" }}>{resName[0]}</span>
                   {resName.slice(1)}
@@ -194,11 +194,27 @@ function Home() {
           </div>
           <ColoredLine color="red" />
           <div className="row">
-            <div className="col-md-8">
-              <div className="row">
-                {menu.map((item) => (
+            
+            {menu.map((item) => (
+              <div className="col-md-12 product-ln" style={{border: "1px solid #ccc"}}>
+                <div className="row">
                   <div className="col-md-3">
-                    {/* {console.log(item.Item_name)} */}
+                    <label class="form-check-label pt-2" for="flexCheckDefault">
+                      <span style={{ fontSize: "140%" }}>
+                        {" "}
+                        {item.Item_name}
+                      </span>
+                    </label>
+                  </div>
+                  <div className="col-md-3">
+                    <p className="pt-3">
+                      Qauntity: {item.Quantity} {item.Uom}
+                    </p>
+                  </div>
+                  <div className="col-md-3">
+                    <p className="pt-3">Price: {item.Price} Taka</p>
+                  </div>
+                  <div className="col-md-3 text-center pt-2">
                     <input
                       class="form-check-input pt-2 mt-2"
                       type="checkbox"
@@ -206,21 +222,14 @@ function Home() {
                       id="flexCheckDefault"
                       onClick={handleChange}
                     />
-                    <label class="form-check-label" for="flexCheckDefault">
-                      <span style={{ fontSize: "140%" }}>
-                        {" "}
-                        {item.Item_name}
-                      </span>
-                    </label>
-                    <p className="pt-4">
-                      Qauntity: {item.Quantity} {item.Uom}
-                    </p>
-                    <p className="mb-4 pb-4">Price: {item.Price} Taka</p>
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
-            <div className="col-md-4">
+            ))}
+          </div>
+          <div className="row">
+          
+            <div className="col-md-12 text-right p-0 mt-4">
               {item.length > 0 && (
                 <div class="card">
                   <div class="card-body">
@@ -229,27 +238,27 @@ function Home() {
                       {item.map((it, index) => (
                         <div>
                           <div className="row ml-2">
-                            <div className="col-md-5 float-left">
+                            <div className="col-md-5 text-left">
                               {console.log(it)}
                               <p>
                                 {index + 1} : {it.item_name}{" "}
                               </p>
                             </div>
-                            <div className="col-md-7 float-right">
+                            <div className="col-md-7 text-right">
                               <button
-                                className="btn btn-success pr-1 mr-1"
+                                className="btn btn-success btn-sm mr-2"
                                 onClick={() => increment(it.item_id)}
                               >
                                 +
                               </button>
                               {it.counter}
                               <button
-                                className="btn btn-danger pl-1 ml-1 mr-1"
+                                className="btn btn-danger btn-sm ml-2"
                                 onClick={() => decrement(it.item_id)}
                               >
                                 -
                               </button>
-                              = {it.total_price} Tk
+                              <span className="fprice">= {it.total_price} Tk</span>
                             </div>
                           </div>
                         </div>
@@ -257,7 +266,7 @@ function Home() {
                     </div>
                     <hr />
                     <div className="row">
-                      <div className="col-md-6">
+                      <div className="col-md-12">
                         {totalButton && (
                           <button
                             className="btn btn-success"
@@ -268,7 +277,7 @@ function Home() {
                         )}
                       </div>
                       {!totalButton && (
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                           <p> Amount = {amount}</p>
                           <p>+15% VAT= {vat}</p>
                           <hr></hr>
@@ -282,8 +291,9 @@ function Home() {
               {item.length > 0 && (
                 <>
                   <div className="row">
+                  <div className="col-md-6 mx-auto">
                     <button
-                      className="btn pl-5 ml-5 mt-2"
+                      className="btn btn-block mt-2 text-center text-white"
                       style={{ background: "orange" }}
                       onClick={makeOrder}
                     >
@@ -291,10 +301,12 @@ function Home() {
                     </button>
                     <p>{msg}</p>
                   </div>
+                  </div>
                 </>
               )}
             </div>
           </div>
+          
         </>
       ) : (
         <>
