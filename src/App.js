@@ -7,7 +7,7 @@ import {
 import Home from './Components/Home';
 function App() {
   return (
-    <div className="container">
+    <div className="container p-0">
       <BrowserRouter>
         <Routes>
          <Route path="/api/res/:res_id/:branch_id/:table_id/menu/" element={<Home />}>

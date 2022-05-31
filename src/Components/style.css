@@ -18,3 +18,19 @@ span.fprice {
         padding-left: 0px;
     }
 }
+/* ///////////////////31/5 */
+.m-25 .col-md-3 {
+    width: 25%;
+}
+.price-box {
+    text-align: center;
+    width: 62px;
+    border: 1px solid #000;
+}
+.q-box {
+    width: 75px;
+}
+.cbtn-1 {
+    border: 1px solid #000;
+    line-height: 20px;
+}

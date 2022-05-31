@@ -9,7 +9,7 @@ const ColoredLine = ({ color }) => (
     style={{
       color: color,
       backgroundColor: color,
-      height: 2,
+      height: 1,
     }}
   />
 );
@@ -169,15 +169,14 @@ function Home() {
     window.location.reload();
   };
   return (
-    <div className="container-fluid">
+    <div className="container-fluid p-0">
       {!isLoading ? (
         <>
           <div className="row pt-4">
-            <div className="col-md-2 pt-5 mt-5">
-              {/* {console.log(menu)} */}
+            {/* <div className="col-md-2 pt-5 mt-5">
               <p style={{ color: "red" }}>{resName}</p>
               <p style={{ color: "red" }}>{restaurentDetails.Address}</p>
-            </div>
+            </div> */}
             <div className="col-md-8 text-center">
               <h1>
                 <sub>
@@ -186,40 +185,41 @@ function Home() {
                 </sub>
               </h1>
             </div>
-            <div className="col-md-2  pt-5 mt-5">
+            <div className="col-md-2 pt-4 text-center">
               <a href="!#" style={{ color: "red" }}>
                 Show order details
               </a>
             </div>
           </div>
           <ColoredLine color="red" />
-          <div className="row">
-            
+          <div className="row mx-4">
+          <h5>Category Name</h5>
             {menu.map((item) => (
-              <div className="col-md-12 product-ln" style={{border: "1px solid #ccc"}}>
-                <div className="row">
+              
+              <div className="col-md-12">
+                
+                <div className="row m-25">
                   <div className="col-md-3">
-                    <label class="form-check-label pt-2" for="flexCheckDefault">
-                      <span style={{ fontSize: "140%" }}>
-                        {" "}
-                        {item.Item_name}
-                      </span>
+                    <label className="mb-0" for="flexCheckDefault">  
+                      <p className="">{item.Item_name}</p>
                     </label>
                   </div>
                   <div className="col-md-3">
-                    <p className="pt-3">
-                      Qauntity: {item.Quantity} {item.Uom}
-                    </p>
+                    <p className="price-box p-1">{item.Price} /-</p>
                   </div>
                   <div className="col-md-3">
-                    <p className="pt-3">Price: {item.Price} Taka</p>
+                    <p className="price-box p-1 q-box">Qnt: {item.Quantity} {item.Uom}</p>
                   </div>
-                  <div className="col-md-3 text-center pt-2">
+                  <div className="col-md-3 text-center px-4">
                     <input
-                      class="form-check-input pt-2 mt-2"
+                      class="btn btn-transparent bg-transparent cbtn-1"
+                      type="button"
+                      value="Add"
+                    />
+                    <input
+                      style={{opacity: 0}}
                       type="checkbox"
                       value={[item.Item_name, item._id, item.Price]}
-                      id="flexCheckDefault"
                       onClick={handleChange}
                     />
                   </div>
