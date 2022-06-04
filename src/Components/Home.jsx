@@ -238,7 +238,7 @@ function Home() {
               {item.length > 0 && (
                 <div class="card">
                   <div className="text-left ml-5 mt-4">
-                    divOrder
+                    Order
                   </div>
                   <div class="card-body">
                     <div className="div mx-4 pl-4">
