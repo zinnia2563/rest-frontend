@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { URL } from "../Utils/utils";
 import { useParams } from "react-router-dom";
-import swal from "sweetalert";
 import "./style.css";
 
 const ColoredLine = ({ color }) => (
@@ -10,7 +9,7 @@ const ColoredLine = ({ color }) => (
     style={{
       color: color,
       backgroundColor: color,
-      height: 2,
+      height: 1,
     }}
   />
 );
@@ -68,6 +67,10 @@ function Home() {
       console.log(error);
     }
   }, [res_id]);
+  
+  const handleClick = (item) => {
+    console.log('Items:'+item.item.Item_name);
+  }
   const handleChange = ({ target: { checked, value } }) => {
     console.log(checked);
     // console.log(value);
@@ -178,24 +181,18 @@ function Home() {
       `${URL}api/res/${res_id}/table/${table_id}/order`,
       payload
     );
-    if (response.data.Restaurant_id) {
-      swal("Order placed successfully.").then((value) => {
-        window.location.reload();
-      });
-    }
     setMsg(response.Message);
     window.location.reload();
   };
   return (
-    <div className="container-fluid">
+    <div className="container-fluid p-0">
       {!isLoading ? (
         <>
           <div className="row pt-4">
-            <div className="col-md-2 pt-5 mt-5">
-              {/* {console.log(menu)} */}
+            {/* <div className="col-md-2 pt-5 mt-5">
               <p style={{ color: "red" }}>{resName}</p>
               <p style={{ color: "red" }}>{restaurentDetails.Address}</p>
-            </div>
+            </div> */}
             <div className="col-md-8 text-center">
               <h1>
                 <sub>
@@ -204,42 +201,42 @@ function Home() {
                 </sub>
               </h1>
             </div>
-            <div className="col-md-2  pt-5 mt-5">
+            <div className="col-md-2 pt-4 text-center">
               <a href="!#" style={{ color: "red" }}>
                 Show order details
               </a>
             </div>
           </div>
           <ColoredLine color="red" />
-          <div className="row">
+          <div className="row mx-4">
+          <h5>Category Name</h5>
             {menu.map((item) => (
-              <div
-                className="col-md-12 product-ln"
-                style={{ border: "1px solid #ccc" }}
-              >
-                <div className="row">
+              
+              <div className="col-md-12">
+                
+                <div className="row m-25">
                   <div className="col-md-3">
-                    <label class="form-check-label pt-2" for="flexCheckDefault">
-                      <span style={{ fontSize: "140%" }}>
-                        {" "}
-                        {item.Item_name}
-                      </span>
+                    <label className="mb-0" for="flexCheckDefault">  
+                      <p className="">{item.Item_name}</p>
                     </label>
                   </div>
                   <div className="col-md-3">
-                    <p className="pt-3">
-                      Qauntity: {item.Quantity} {item.Uom}
-                    </p>
+                    <p className="price-box p-1">{item.Price} /-</p>
                   </div>
                   <div className="col-md-3">
-                    <p className="pt-3">Price: {item.Price} Taka</p>
+                    <p className="price-box p-1 q-box">Qnt: {item.Quantity} {item.Uom}</p>
                   </div>
-                  <div className="col-md-3 text-center pt-2">
+                  <div className="col-md-3 text-center px-4">
                     <input
-                      class="form-check-input pt-2 mt-2"
+                      class="btn btn-transparent bg-transparent cbtn-1"
+                      type="button"
+                      value="Add"
+                      onClick={(item)=>{handleClick(item) }}
+                    />
+                    <input
+                      // style={{opacity: 0}}class="btn btn-transparent bg-transparent cbtn-1"
                       type="checkbox"
                       value={[item.Item_name, item._id, item.Price]}
-                      id="flexCheckDefault"
                       onClick={handleChange}
                     />
                   </div>
@@ -248,38 +245,46 @@ function Home() {
             ))}
           </div>
           <div className="row">
+          
             <div className="col-md-12 text-right p-0 mt-4">
               {item.length > 0 && (
                 <div class="card">
+                  <div className="text-left ml-5 mt-4">
+                    Order
+                  </div>
                   <div class="card-body">
-                    <div className="div">
+                    <div className="div mx-4 pl-4">
                       {/* <span>Your order</span> */}
                       {item.map((it, index) => (
                         <div>
-                          <div className="row ml-2">
-                            <div className="col-md-5 text-left">
+                          <div className="row m-25">
+                            <div className="col-md-3 text-left">
                               {console.log(it)}
                               <p>
-                                {index + 1} : {it.item_name}{" "}
+                                {/* {index + 1} :  */}
+                                {it.item_name}{" "}
                               </p>
                             </div>
-                            <div className="col-md-7 text-right">
+                            <div className="col-md-5 text-right">
                               <button
                                 className="btn btn-success btn-sm mr-2"
                                 onClick={() => increment(it.item_id)}
                               >
                                 +
                               </button>
+                              <span className="cbox">
                               {it.counter}
+                              </span>
+                              
                               <button
                                 className="btn btn-danger btn-sm ml-2"
                                 onClick={() => decrement(it.item_id)}
                               >
                                 -
                               </button>
-                              <span className="fprice">
-                                = {it.total_price} Tk
-                              </span>
+                            </div>
+                            <div className="col-md-4 text-right"> 
+                              <span className="fprice price-box p-1">{it.total_price} Tk</span>
                             </div>
                           </div>
                         </div>
@@ -299,10 +304,20 @@ function Home() {
                       </div>
                       {!totalButton && (
                         <div className="col-md-12">
-                          <p> Amount = {amount}</p>
-                          <p>+15% VAT= {vat}</p>
-                          <hr></hr>
-                          <p>Total = {totalbil} Tk only</p>
+                          <table className="ctable">
+                            <tr>
+                              <td>Amount</td>
+                              <td>{amount} Tk</td>
+                            </tr>
+                            <tr>
+                              <td>VAT (+15%)</td>
+                              <td>{vat} Tk</td>
+                            </tr>
+                            <tr>
+                              <td>Total</td>
+                              <td>{totalbil} Tk</td>
+                            </tr>
+                          </table>
                         </div>
                       )}
                     </div>
@@ -312,21 +327,22 @@ function Home() {
               {item.length > 0 && (
                 <>
                   <div className="row">
-                    <div className="col-md-6 mx-auto">
-                      <button
-                        className="btn btn-block mt-2 text-center text-white"
-                        style={{ background: "orange" }}
-                        onClick={makeOrder}
-                      >
-                        Order now
-                      </button>
-                      <p>{msg}</p>
-                    </div>
+                  <div className="col-md-6 mx-auto">
+                    <button
+                      className="btn btn-block mt-2 text-center text-white"
+                      style={{ background: "orange" }}
+                      onClick={makeOrder}
+                    >
+                      Order now
+                    </button>
+                    <p>{msg}</p>
+                  </div>
                   </div>
                 </>
               )}
             </div>
           </div>
+          
         </>
       ) : (
         <>

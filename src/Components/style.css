@@ -18,3 +18,35 @@ span.fprice {
         padding-left: 0px;
     }
 }
+/* ///////////////////31/5 */
+.m-25 .col-md-3 {
+    width: 25%;
+}
+.card-body .col-md-3 {
+    width: 30%;
+}
+table.ctable {
+    width: 100%;
+}
+span.cbox {
+    border: 1px solid;
+    padding: 0px 5px 7px 5px;
+}
+.card-body .col-md-5 {
+    width: 40%;
+}
+.card-body .col-md-4 {
+    width: 30%;
+}
+.price-box {
+    text-align: center;
+    width: 62px;
+    border: 1px solid #000;
+}
+.q-box {
+    width: 75px;
+}
+.cbtn-1 {
+    border: 1px solid #000;
+    line-height: 20px;
+}
