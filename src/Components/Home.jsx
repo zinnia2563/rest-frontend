@@ -26,6 +26,7 @@ function Home() {
   const [vat, setVat] = useState(0);
   const [totalButton, setTotalButton] = useState(true);
   const [totalbil, setTotalBil] = useState(0);
+  const [scan, setScan] = useState(true);
 
   // const [orderitem, setOrderItem] = useState([]);
   // const [counter, setCounter] = useState(1);
@@ -35,10 +36,21 @@ function Home() {
     try {
       async function getResutrentData() {
         setIsloading(true);
-        const { data } = await axios.get(`${URL}api/res/${res_id}/menu/`);
+        let scan = true;
+        if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+          scan = false;
+        } else {
+          scan = true;
+        }
+        const obj = {
+          scan,
+        };
+        const { data } = await axios.post(`${URL}api/res/${res_id}/menu/`, obj);
+
         if (data) {
           setmenu(data.data);
           setIsloading(false);
+          setScan(false);
         }
       }
       async function getResturentDetails() {
